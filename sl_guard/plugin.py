@@ -167,7 +167,7 @@ class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, Inv
             'description': tr('protected_stock_locations'),
             'icon': 'ti:shield-lock',
             'source': self.plugin_static_file('sl_guard_dashboard.js:renderDashboardItem'),
-            'options': {'width': 2, 'height': 3},
+            'options': {'width': 1, 'height': 3},
             'context': {
                 'protected_count': protected_count,
                 'protected_type_count': len(protected_types),

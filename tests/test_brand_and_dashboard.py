@@ -41,6 +41,13 @@ def test_dashboard_has_official_hook_and_hidden_navigation_preserves_route():
     assert "'options': {'path': 'manage'}" in code
 
 
+def test_protected_badges_use_active_mantine_theme():
+    code = (ROOT / 'sl_guard/static/sl_guard_panel.js').read_text()
+    assert '.slg .slg-pill.slg-protected{background:var(--mantine-primary-color-light' in code
+    assert 'border-color:color-mix(in srgb,var(--mantine-primary-color-light-color' in code
+    assert 'background:rgba(208,126,18,.1)' not in code
+
+
 def test_panel_version_is_provided_by_installed_plugin():
     backend = (ROOT / 'sl_guard/views.py').read_text()
     frontend = (ROOT / 'sl_guard/static/sl_guard_panel.js').read_text()

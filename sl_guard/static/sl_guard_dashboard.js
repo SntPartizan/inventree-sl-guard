@@ -26,9 +26,9 @@ export function renderDashboardItem(target, data) {
   const root = document.createElement('div');
   root.style.cssText = 'display:flex;flex-direction:column;justify-content:space-between;gap:8px;height:100%;box-sizing:border-box;padding:2px 0;color:var(--mantine-color-text,inherit)';
   const title = document.createElement('div');
-  title.style.cssText = 'display:flex;align-items:center;gap:9px;font-size:17px;font-weight:700';
+  title.style.cssText = 'display:flex;align-items:center;gap:11px;font-size:21px;font-weight:700;line-height:1.25';
   // Same outline shield as the navigation and protected-location counter.
-  const shield = createShieldSvg(document, 23);
+  const shield = createShieldSvg(document, 28);
   title.append(shield, document.createTextNode('SL Guard'));
 
   const stats = document.createElement('div');

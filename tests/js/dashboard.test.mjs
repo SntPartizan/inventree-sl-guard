@@ -26,6 +26,8 @@ test('SL Guard dashboard card links to existing route and displays protected cou
   assert.equal(shield.tag,'svg');
   assert.equal(shield.attrs.viewBox,'0 0 24 24');
   assert.equal(shield.children.length,3);
+  assert.equal(shield.attrs.width,'28');
+  assert.match(target.children[0].children[0].style.cssText,/font-size:21px/);
   assert.match(target.children[0].style.cssText,/height:100%/);
   assert.match(getText(target),/Protected locations/);
   assert.match(getText(target),/74/);

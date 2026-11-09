@@ -1,5 +1,8 @@
 # InvenTree SL Guard
 
+[![PyPI version](https://img.shields.io/pypi/v/inventree-sl-guard?label=PyPI%20version)](https://pypi.org/project/inventree-sl-guard/)
+[![PyPI downloads per month](https://img.shields.io/pypi/dm/inventree-sl-guard?label=downloads%2Fmonth)](https://pypistats.org/packages/inventree-sl-guard)
+
 **Community-developed InvenTree plugin — v0.3.1 beta, verified on InvenTree 1.6.1.**
 
 **A warehouse is a physical system, not an arbitrary tree of editable database records.** Rooms, aisles, racks and fixed shelves occupy real places. When their digital hierarchy changes without a matching change on the warehouse floor, the location map stops reflecting reality.

@@ -1,6 +1,6 @@
 # Maintainer release guide
 
-SL Guard is currently at Python package version **0.3.1**. It has been tested on InvenTree 1.6.1. Version **0.3.1** was published on PyPI through GitHub Actions Trusted Publishing on 2026-11-09.
+SL Guard's current source version is **0.3.2** (beta), tested on InvenTree 1.6.1. The first PyPI release, **0.3.1**, was published through GitHub Actions Trusted Publishing on 2026-11-09. A new GitHub Release is required to publish a subsequent version to PyPI.
 
 ## Before publishing
 
@@ -18,8 +18,8 @@ SL Guard is currently at Python package version **0.3.1**. It has been tested on
 
 1. For future versions, change the version in `pyproject.toml`, `sl_guard/__init__.py`, `sl_guard/plugin.py`, and update `CHANGELOG.md` and README version references. Commit all changes and confirm CI.
 2. Open [GitHub Releases](https://github.com/SntPartizan/inventree-sl-guard/releases) and choose **Draft a new release**.
-3. Create a Git tag matching the `pyproject.toml` version **exactly**, prefixed by `v` (for the initial release, **`v0.3.1`**). Target the verified commit on `main`.
-4. Set a release title such as **`SL Guard v0.3.1 (beta)`**, include release notes and select **Set as a pre-release** while compatibility is still limited. The Git tag is **`v0.3.1`**, even if the GitHub Release is marked as a pre-release.
+3. Create a Git tag matching the `pyproject.toml` version **exactly**, prefixed by `v` (for this release, **`v0.3.2`**). Target the verified commit on `main`.
+4. Set a release title such as **`SL Guard v0.3.2 (beta)`**, include release notes and select **Set as a pre-release** while compatibility is still limited. The Git tag is **`v0.3.2`**, even if the GitHub Release is marked as a pre-release.
 5. **Publish release**. This triggers `.github/workflows/publish.yml`, which checks the tag against the package version, runs Python/JavaScript tests, builds a wheel and source distribution, checks package metadata, and uses OIDC Trusted Publishing to upload to PyPI.
 6. Follow the [GitHub Actions](https://github.com/SntPartizan/inventree-sl-guard/actions) run. If the `pypi` environment requires approval, authorize it through GitHub. Check the published package at https://pypi.org/project/inventree-sl-guard/.
 

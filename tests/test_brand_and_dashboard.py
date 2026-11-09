@@ -18,7 +18,7 @@ def test_sl_guard_internal_identity_and_public_title():
     assert attrs['NAME'] == 'SL Guard'  # display name; the slug stays stable
     assert attrs['SLUG'] == 'sl-guard'
     assert attrs['TITLE'] == 'SL Guard'
-    assert attrs['VERSION'] == '0.3.1'
+    assert attrs['VERSION'] == '0.3.2'
     assert attrs['AUTHOR'] == 'SntPartizan'
     source = (ROOT / 'sl_guard/plugin.py').read_text()
     assert '"SHOW_NAVIGATION"' in source and '"SHOW_DASHBOARD_WIDGET"' in source

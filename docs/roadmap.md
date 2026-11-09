@@ -8,4 +8,5 @@ These are goals, not shipped capabilities:
 - [ ] Improve error messages surfaced in the standard InvenTree mobile / barcode UI upstream
 - [ ] Audit delete operations and MPTT/bulk update bypasses
 - [ ] Improve large-instance pagination, audit log and performance diagnostics
-- [ ] Publish a reviewed release to PyPI and request inclusion in the InvenTree community plugin list
+- [x] Publish the package to PyPI (initial release: 0.3.1)
+- [ ] Obtain inclusion in the InvenTree community plugin list (PR #294)

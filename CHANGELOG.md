@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.2 — beta (theme-aware interface and dashboard refinement)
+
+- Replace emoji-style shield branding with a consistent **Tabler-style outline shield** in the SL Guard page header, protected-location count, and dashboard widget.
+- Keep the standard InvenTree navigation tab clean: **SL Guard**, without an emoji or DOM monkey patch.
+- Make **Protected / Locked** table badges follow the active InvenTree (Mantine) theme instead of using hardcoded orange colors.
+- Improve the dashboard card: larger title and shield, centered values and captions, and a minimum width of one grid column (the dashboard retains users' existing saved layouts).
+- Keep the protected-location summary cards neutral; emphasize the count with an outline icon instead of filling the card.
+- Refresh the English/Russian README and PyPI package description; maintain the current shared translation catalogs.
+- Expand automated regression tests for branding, SVG shape, theme variables, dashboard layout and packaging.
+- **No permission or stock-location protection behavior changes.** Still verified on InvenTree 1.6.1; compatibility with other versions requires testing.
+
 ## 0.3.1 — beta (UI polish)
 
 - Display the plugin as **SL Guard** in the InvenTree plugin list (unchanged slug `sl-guard`).

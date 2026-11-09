@@ -23,7 +23,7 @@ class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, Inv
     TITLE = "SL Guard"
     DESCRIPTION = "Protect stock locations from unauthorized relocation and type changes"
     AUTHOR = "SntPartizan"
-    VERSION = "0.3.1"
+    VERSION = "0.3.2"
     LICENSE = "MIT"
 
     # IDs, not names. The admin can also configure these through config API.

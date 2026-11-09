@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-Until wider testing is complete, **0.3.0 is a beta validated only against InvenTree 1.6.1**. There is no guarantee of compatibility with newer upstream internals.
+Until wider testing is complete, **0.3.2 is a beta validated only against InvenTree 1.6.1**. There is no guarantee of compatibility with newer upstream internals.
 
 ## Reporting a vulnerability
 

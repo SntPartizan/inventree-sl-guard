@@ -3,7 +3,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/inventree-sl-guard?label=PyPI%20version)](https://pypi.org/project/inventree-sl-guard/)
 [![PyPI downloads per month](https://img.shields.io/pypi/dm/inventree-sl-guard?label=downloads%2Fmonth)](https://pypistats.org/packages/inventree-sl-guard)
 
-**Community-developed InvenTree plugin — v0.3.1 beta, verified on InvenTree 1.6.1.**
+**Community-developed InvenTree plugin — v0.3.2 beta, verified on InvenTree 1.6.1.**
 
 **A warehouse is a physical system, not an arbitrary tree of editable database records.** Rooms, aisles, racks and fixed shelves occupy real places. When their digital hierarchy changes without a matching change on the warehouse floor, the location map stops reflecting reality.
 
@@ -27,7 +27,7 @@ SL Guard is free and open source. If you find it useful, you can [support contin
 - Prevent indirect relocation of protected descendants when moving an unprotected ancestor.
 - Bulk-assign types from an embedded panel: full hierarchical paths, selectable search fields (name, path, current type, ID), optional JavaScript regex, checkboxes, preview/dry-run, transactional server-side commit.
 - Retain ordinary editing of names/descriptions, normal stock-item moves, and moves of locations without protected descendants.
-- Optional **SL Guard** navigation shortcut and **SL Guard** dashboard widget (matching shield symbol). Both are independently configurable by the superuser; hiding either does not disable protection or remove the management route.
+- Optional **SL Guard** navigation shortcut (plain text) and **SL Guard** dashboard widget (theme-aware outline shield). Both are independently configurable by the superuser; hiding either does not disable protection or remove the management route.
 
 > **Compatibility caution:** This beta is tested on **InvenTree 1.6.1**, not on every InvenTree release. It wraps an internal `LocationSerializer.validate` method at runtime to pass the authenticated request user to the model validation hook. This is a monkey patch, not a stable public plugin API. Review and test before upgrading InvenTree.
 
@@ -51,7 +51,7 @@ Do not add duplicate YAML keys; check that environment variables do not override
 
 ## Installation from InvenTree (recommended)
 
-**SL Guard 0.3.1 is published on [PyPI](https://pypi.org/project/inventree-sl-guard/).** Install it by package name using InvenTree's built-in plugin installer (verified on InvenTree 1.6.1).
+**SL Guard is available on [PyPI](https://pypi.org/project/inventree-sl-guard/).** Install it by package name using InvenTree's built-in plugin installer (verified on InvenTree 1.6.1).
 
 1. Back up your database and configuration; test on a non-production instance first. Ensure third-party plugins and their installation are enabled as described above.
 2. Sign in as an **InvenTree superuser**, then open **Settings → Admin → Plugins → Install Plugin**.
@@ -75,14 +75,14 @@ Do not add duplicate YAML keys; check that environment variables do not override
 
 For a PyPI installation, use **Update** in **Settings → Admin → Plugins** with package name `inventree-sl-guard`, a blank **Source URL**, and blank **Version** for the latest release. Review the displayed version and verify that protection still works after upgrading. Settings are preserved when upgrading the same `sl-guard` plugin, but should still be checked.
 
-To install from the source repository instead of PyPI, supply **Source URL** `git+https://github.com/SntPartizan/inventree-sl-guard.git` in the installer; leave **Version** blank. If updating an existing GitHub installation, enter the same Git URL again, as InvenTree 1.6.1 may not remember it. For a reproducible source installation, pin the released tag: `git+https://github.com/SntPartizan/inventree-sl-guard.git@v0.3.1`.
+To install from the source repository instead of PyPI, supply **Source URL** `git+https://github.com/SntPartizan/inventree-sl-guard.git` in the installer; leave **Version** blank. If updating an existing GitHub installation, enter the same Git URL again, as InvenTree 1.6.1 may not remember it. For a reproducible source installation, pin the released tag: `git+https://github.com/SntPartizan/inventree-sl-guard.git@v0.3.2`.
 
 ### Alternative: manual wheel installation
 
 For offline development or deployments where the GUI installer is unavailable, install a downloaded release wheel in the **same Python environment** as InvenTree:
 
 ```bash
-python -m pip install --no-deps --upgrade ./inventree_sl_guard-0.3.1-py3-none-any.whl
+python -m pip install --no-deps --upgrade ./inventree_sl_guard-0.3.2-py3-none-any.whl
 ```
 
 Restart web and worker processes, activate the plugin and collect static files if needed. Do not run the command against an unrelated system Python environment.

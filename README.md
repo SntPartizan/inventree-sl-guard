@@ -20,8 +20,6 @@ InvenTree treats racks, shelves and boxes as stock locations. This plugin lets a
 
 This package is **not yet published on PyPI**. Install it directly from the public GitHub repository using InvenTree's built-in plugin installer (verified on InvenTree 1.6.1).
 
-If you use the earlier **Fixed Location Guard**, follow the [migration guide](docs/migrate-from-old-plugin.md) first: it is a different plugin and must not remain active alongside SL Guard.
-
 1. Back up your database and configuration; test on a non-production instance first. Ensure external plugins are enabled (`plugins_enabled: true`).
 2. Sign in as an **InvenTree superuser**, then open **Settings → Admin → Plugins → Install Plugin**.
 3. Fill out the installer form:
@@ -56,7 +54,7 @@ python -m pip install --no-deps --upgrade ./inventree_sl_guard-0.3.0-py3-none-an
 
 Restart web and worker processes, activate the plugin and collect static files if needed. Do not run the command against an unrelated system Python environment.
 
-The UI brand is **SL Guard** in every language. English and Russian panel translations are provided. The distribution is `inventree-sl-guard`, the plugin's internal `NAME` is currently `SLGuard`, and its slug is `sl-guard`. Existing stock-location type assignments survive a migration from the old plugin, but protection settings do **not** transfer automatically.
+The UI brand is **SL Guard** in every language. English and Russian panel translations are provided. The distribution is `inventree-sl-guard`, the plugin's internal `NAME` is currently `SLGuard`, and its slug is `sl-guard`. 
 
 See [Russian instructions](README_RU.md), [localization notes](docs/localization.md), and [deployment notes](docs/deployment.md).
 

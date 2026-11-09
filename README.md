@@ -4,6 +4,10 @@
 
 **A warehouse is a physical system, not an arbitrary tree of editable database records.** Rooms, aisles, racks and fixed shelves occupy real places. When their digital hierarchy changes without a matching change on the warehouse floor, the location map stops reflecting reality.
 
+**A warehouse is not a nesting doll.** You cannot put the warehouse itself inside a cardboard box. A room does not belong in a bag; nor should a rack or fixed shelf suddenly become the child of a movable container in the digital location tree. **If the database says a shelf is inside a bag while the shelf is bolted to the wall, the database is wrong — not the physical world.**
+
+SL Guard helps prevent such unauthorized structural rearrangements for **locations whose types an administrator has marked as protected**. It enforces those movement restrictions; it is not a general-purpose dimensional or physical-fit validator.
+
 **SL Guard gives InvenTree's stock-location hierarchy a protected structural backbone.** Administrators designate types that represent fixed infrastructure. Unauthorized users cannot relocate those locations, change an existing protected type, or indirectly move protected descendants by moving an ancestor. Authorized staff can deliberately revise the layout, while everyday stock movements remain governed by normal InvenTree permissions.
 
 **Keep the digital warehouse true to the physical one. Let inventory move — not the infrastructure around it.**

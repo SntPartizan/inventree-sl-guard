@@ -32,12 +32,13 @@ export function renderDashboardItem(target, data) {
   title.append(shield, document.createTextNode('SL Guard'));
 
   const stats = document.createElement('div');
-  stats.style.cssText = 'display:flex;gap:18px;row-gap:6px;flex-wrap:wrap';
+  stats.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:18px;row-gap:8px;flex-wrap:wrap;width:100%';
   for (const [value, label] of [
     [protectedCount, tr('dashboard_protected_locations')],
     [typeCount, tr('dashboard_protected_types')],
   ]) {
     const group = document.createElement('div');
+    group.style.cssText = 'display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;min-width:0';
     const count = document.createElement('strong');
     count.style.cssText = 'font-size:22px;font-variant-numeric:tabular-nums;display:block';
     count.textContent = String(value);

@@ -31,6 +31,14 @@ test('SL Guard dashboard card links to existing route and displays protected cou
   assert.match(target.children[0].style.cssText,/height:100%/);
   assert.match(getText(target),/Protected locations/);
   assert.match(getText(target),/74/);
+  const stats = target.children[0].children[1];
+  assert.match(stats.style.cssText,/justify-content:center/);
+  assert.match(stats.style.cssText,/align-items:center/);
+  assert.equal(stats.children.length,2);
+  for (const group of stats.children) {
+    assert.match(group.style.cssText,/align-items:center/);
+    assert.match(group.style.cssText,/text-align:center/);
+  }
   const link=target.children[0].children.at(-1);
   assert.equal(link.href,'/web/plugin/sl-guard/manage');
 });

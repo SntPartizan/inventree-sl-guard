@@ -170,6 +170,7 @@ class LocationsView(APIView):
             'is_admin': bool(request.user.is_superuser),
             'can_manage_protected': allowed,
             'batch_limit': MAX_BATCH_SIZE,
+            'plugin_version': self.plugin.VERSION,
         })
 
 

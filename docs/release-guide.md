@@ -1,14 +1,36 @@
 # Maintainer release guide
 
-1. Review license ownership/attribution, package name availability on PyPI, public branding and screenshots. Do not publish code copied from a private or third-party project without reviewing license and rights.
-2. Run the CI tests and the [manual test matrix](test-matrix.md). No production secrets or backups should be committed.
-3. Update version in `pyproject.toml`, `sl_guard/__init__.py`, `plugin.py`, and CHANGELOG.
-4. Create GitHub release with signed/tagged version such as `v0.3.0` after the first public push.
-5. Create/claim the package name on PyPI and configure a **Trusted Publisher** for a protected GitHub Actions workflow (do not put PyPI API tokens in the repository). Set up publication only after identity and permissions are confirmed.
-6. Submit a listing request to the InvenTree project when the release is verified on supported versions.
+SL Guard is currently at Python package version **0.3.1**. It has been tested on InvenTree 1.6.1. It is not yet published on PyPI.
 
-The supplied CI workflow **does not publish** anything. Keep the first release explicitly manual to avoid accidental uploads.
+## Before publishing
 
-## Repository branding
+1. Review code ownership, licensing, dependencies, packaging metadata, and screenshots. Never include credentials, database exports or private keys.
+2. Confirm CI is green. Run the [manual integration test matrix](test-matrix.md) for the InvenTree version you intend to support.
+3. Configure [PyPI Trusted Publishing](https://pypi.org/manage/account/publishing/) as a pending publisher (for the first release) or project publisher (for subsequent releases):
+   - **PyPI project name:** `inventree-sl-guard`
+   - **GitHub owner:** `SntPartizan`
+   - **Repository:** `inventree-sl-guard`
+   - **Workflow file:** `publish.yml`
+   - **GitHub environment:** `pypi`
+4. In [GitHub Environments](https://github.com/SntPartizan/inventree-sl-guard/settings/environments), create an environment named **`pypi`**. Protect it with deployment tag restrictions (`v*`) and optional manual approvals where available.
 
-The recommended GitHub URL is `https://github.com/SntPartizan/inventree-sl-guard` after renaming the existing empty repository through GitHub **Settings → General → Repository name**. The plugin distribution, entry point, and URL slug have all been changed to the matching **SL Guard** identifiers.
+## Publishing a version
+
+1. For future versions, change the version in `pyproject.toml`, `sl_guard/__init__.py`, `sl_guard/plugin.py`, and update `CHANGELOG.md` and README version references. Commit all changes and confirm CI.
+2. Open [GitHub Releases](https://github.com/SntPartizan/inventree-sl-guard/releases) and choose **Draft a new release**.
+3. Create a Git tag matching the `pyproject.toml` version **exactly**, prefixed by `v` (for the initial release, **`v0.3.1`**). Target the verified commit on `main`.
+4. Set a release title such as **`SL Guard v0.3.1 (beta)`**, include release notes and select **Set as a pre-release** while compatibility is still limited. The Git tag is **`v0.3.1`**, even if the GitHub Release is marked as a pre-release.
+5. **Publish release**. This triggers `.github/workflows/publish.yml`, which checks the tag against the package version, runs Python/JavaScript tests, builds a wheel and source distribution, checks package metadata, and uses OIDC Trusted Publishing to upload to PyPI.
+6. Follow the [GitHub Actions](https://github.com/SntPartizan/inventree-sl-guard/actions) run. If the `pypi` environment requires approval, authorize it through GitHub. Check the published package at https://pypi.org/project/inventree-sl-guard/.
+
+**Important:** PyPI does not permit overwriting distribution files of an already published version. To fix a release, increment the version, commit, and create a new release with the matching tag.
+
+## Deployment
+
+After the PyPI publication succeeds, install by package name `inventree-sl-guard` in the InvenTree plugin installer without a Git URL. Verify it loads and that protected types/groups retain their settings when upgrading the same plugin.
+
+The standard `ci.yml` workflow validates normal commits but **does not publish anything**. Only publication of a GitHub Release triggers the separate `publish.yml` upload workflow.
+
+## Community listing
+
+After verifying the PyPI package, propose adding the plugin to the InvenTree community website using a pull request to https://github.com/inventree/inventree-website. Include a publisher profile and plugin listing following that repository's templates.

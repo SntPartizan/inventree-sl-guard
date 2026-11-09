@@ -30,7 +30,7 @@ SL Guard is free and open source. If you find it useful, you can [support contin
 
 ## Installation from InvenTree (recommended)
 
-This package is **not yet published on PyPI**. Install it directly from the public GitHub repository using InvenTree's built-in plugin installer (verified on InvenTree 1.6.1).
+**SL Guard 0.3.1 is published on [PyPI](https://pypi.org/project/inventree-sl-guard/).** Install it by package name using InvenTree's built-in plugin installer (verified on InvenTree 1.6.1).
 
 1. Back up your database and configuration; test on a non-production instance first. Ensure external plugins are enabled (`plugins_enabled: true`).
 2. Sign in as an **InvenTree superuser**, then open **Settings → Admin → Plugins → Install Plugin**.
@@ -39,7 +39,7 @@ This package is **not yet published on PyPI**. Install it directly from the publ
    | Field | Value |
    | --- | --- |
    | Package Name | `inventree-sl-guard` |
-   | Source URL | `git+https://github.com/SntPartizan/inventree-sl-guard.git` |
+   | Source URL | **Leave blank** (install from PyPI) |
    | Version | Leave blank |
    | Confirm plugin installation | Enabled |
 
@@ -50,11 +50,11 @@ This package is **not yet published on PyPI**. Install it directly from the publ
 
 **Dashboard widget:** SL Guard makes the widget *available*, but does not add it automatically. Add it through the normal **Dashboard → Add Widgets** interface. The navigation item and dashboard widget can be enabled or disabled independently in SL Guard settings; disabling these shortcuts does not disable protection.
 
-### Updating from GitHub
+### Updating and GitHub alternative
 
-From **Settings → Admin → Plugins**, use the installed package's **Update** action. Supply the same **Source URL** (`git+https://github.com/SntPartizan/inventree-sl-guard.git`) again; InvenTree 1.6.1 pre-fills the package name but may not pre-fill the Git URL. Leave **Version** blank for the current repository branch. After upgrading, check the displayed version and verify the protection rules. Settings persist for upgrades of the same `sl-guard` plugin, but should still be verified.
+For a PyPI installation, use **Update** in **Settings → Admin → Plugins** with package name `inventree-sl-guard`, a blank **Source URL**, and blank **Version** for the latest release. Review the displayed version and verify that protection still works after upgrading. Settings are preserved when upgrading the same `sl-guard` plugin, but should still be checked.
 
-For reproducible deployments, pin a tested Git tag in the URL (for example `git+https://github.com/SntPartizan/inventree-sl-guard.git@v0.3.1` **after creating that tag**). No PyPI-based install or update is available until this package is actually published there.
+To install from the source repository instead of PyPI, supply **Source URL** `git+https://github.com/SntPartizan/inventree-sl-guard.git` in the installer; leave **Version** blank. If updating an existing GitHub installation, enter the same Git URL again, as InvenTree 1.6.1 may not remember it. For a reproducible source installation, pin the released tag: `git+https://github.com/SntPartizan/inventree-sl-guard.git@v0.3.1`.
 
 ### Alternative: manual wheel installation
 

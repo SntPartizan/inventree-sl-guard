@@ -28,11 +28,29 @@ SL Guard is free and open source. If you find it useful, you can [support contin
 
 > **Compatibility caution:** This beta is tested on **InvenTree 1.6.1**, not on every InvenTree release. It wraps an internal `LocationSerializer.validate` method at runtime to pass the authenticated request user to the model validation hook. This is a monkey patch, not a stable public plugin API. Review and test before upgrading InvenTree.
 
+## Before installing: enable third-party plugins
+
+InvenTree must allow third-party plugins **on the server**. If the plugin page says installation is disabled or external plugins are not permitted, edit the **active InvenTree configuration** (the location of `config.yaml` varies by deployment):
+
+```yaml
+plugins_enabled: true
+plugin_noinstall: false
+```
+
+Alternatively, configure the InvenTree server environment:
+
+```env
+INVENTREE_PLUGINS_ENABLED=true
+INVENTREE_PLUGIN_NOINSTALL=false
+```
+
+Do not add duplicate YAML keys; check that environment variables do not override the file. After changing server configuration, restart the InvenTree web service and background workers (or recreate the relevant containers). **A superuser account is required** to install plugins. Once plugin support is enabled, install by package name as described below.
+
 ## Installation from InvenTree (recommended)
 
 **SL Guard 0.3.1 is published on [PyPI](https://pypi.org/project/inventree-sl-guard/).** Install it by package name using InvenTree's built-in plugin installer (verified on InvenTree 1.6.1).
 
-1. Back up your database and configuration; test on a non-production instance first. Ensure external plugins are enabled (`plugins_enabled: true`).
+1. Back up your database and configuration; test on a non-production instance first. Ensure third-party plugins and their installation are enabled as described above.
 2. Sign in as an **InvenTree superuser**, then open **Settings → Admin → Plugins → Install Plugin**.
 3. Fill out the installer form:
 

@@ -122,20 +122,9 @@ class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, Inv
 
         errors = {}
         if old_parent != new_parent:
-            errors["parent"] = tr(
-                "Relocation denied: this location or its descendants have a protected "
-                "type. Administrator or authorized group permission is required.",
-                "Перемещение запрещено: эта локация или её дочерние локации "
-                "имеют защищённый тип. Требуется разрешение администратора "
-                "или уполномоченной группы.",
-            )
+            errors["parent"] = tr('error_protected_relocation')
         if old_type != new_type and old_type in protected:
-            errors["location_type"] = tr(
-                "Changing a protected type is denied. Administrator or authorized "
-                "group permission is required.",
-                "Смена защищённого типа запрещена. Требуется разрешение "
-                "администратора или уполномоченной группы.",
-            )
+            errors["location_type"] = tr('error_change_protected_type')
         raise ValidationError(errors)
 
     def _can_use_management_ui(self, request):
@@ -178,7 +167,7 @@ class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, Inv
         return [{
             'key': 'sl-guard-dashboard',
             'title': 'SL Guard',
-            'description': tr('Protected stock locations', 'Защищённые места хранения'),
+            'description': tr('protected_stock_locations'),
             'icon': 'ti:shield-lock',
             'source': self.plugin_static_file('sl_guard_dashboard.js:renderDashboardItem'),
             'options': {'width': 3, 'height': 3},

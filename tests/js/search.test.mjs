@@ -71,11 +71,11 @@ test('bulk request timeout is overridden without modifying global API configurat
 test('English interface is the default and Russian follows InvenTree locale', async () => {
   const { selectLocale, tr } = await import('../../sl_guard/static/sl_guard_panel.js');
   selectLocale('en-US');
-  assert.equal(tr('Управление типами мест хранения'), 'Stock Location Type Management');
-  assert.equal(tr('Найдено {found} из {total} · Отмечено {selected}', {found:2,total:4,selected:1}), 'Found 2 of 4 · Selected 1');
+  assert.equal(tr('location_type_management'), 'Stock Location Type Management');
+  assert.equal(tr('search_results_summary', {found:2,total:4,selected:1}), 'Found 2 of 4 · Selected 1');
   selectLocale('ru_RU');
-  assert.equal(tr('Управление типами мест хранения'), 'Управление типами мест хранения');
-  assert.equal(tr('Найдено {found} из {total} · Отмечено {selected}', {found:2,total:4,selected:1}), 'Найдено 2 из 4 · Отмечено 1');
+  assert.equal(tr('location_type_management'), 'Управление типами мест хранения');
+  assert.equal(tr('search_results_summary', {found:2,total:4,selected:1}), 'Найдено 2 из 4 · Отмечено 1');
   selectLocale('en');
 });
 

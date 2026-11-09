@@ -1,4 +1,5 @@
 /* SL Guard dashboard card. InvenTree 1.6.1 UserInterfaceMixin dashboard contract. */
+import {selectLocale, tr} from './sl_guard_i18n.js';
 function detectLocale(data) {
   const proposed = data?.context?.locale || data?.locale ||
     (typeof document !== 'undefined' ? document.documentElement?.lang : '') || 'en';
@@ -18,7 +19,7 @@ export function frontendUrl(route, pathname = (typeof window !== 'undefined' ? w
 export function renderDashboardItem(target, data) {
   if (!target || typeof document === 'undefined') return;
   const context = data?.context || {};
-  const ru = detectLocale(data) === 'ru';
+  selectLocale(detectLocale(data));
   const protectedCount = Number(context.protected_count) || 0;
   const typeCount = Number(context.protected_type_count) || 0;
   const root = document.createElement('div');
@@ -36,8 +37,8 @@ export function renderDashboardItem(target, data) {
   const stats = document.createElement('div');
   stats.style.cssText = 'display:flex;gap:18px;row-gap:6px;flex-wrap:wrap';
   for (const [value, label] of [
-    [protectedCount, ru ? 'Защищённых локаций' : 'Protected locations'],
-    [typeCount, ru ? 'Защищённых типов' : 'Protected types'],
+    [protectedCount, tr('dashboard_protected_locations')],
+    [typeCount, tr('dashboard_protected_types')],
   ]) {
     const group = document.createElement('div');
     const count = document.createElement('strong');
@@ -51,7 +52,7 @@ export function renderDashboardItem(target, data) {
   }
   const link = document.createElement('a');
   link.href = frontendUrl('plugin/sl-guard/manage');
-  link.textContent = ru ? 'Управление локациями →' : 'Manage stock locations →';
+  link.textContent = tr('dashboard_manage_locations');
   link.style.cssText = 'font-size:13px;font-weight:600;line-height:1.3;color:var(--mantine-primary-color-filled,#2378bd);align-self:flex-start;white-space:normal';
   root.append(title, stats, link);
   target.replaceChildren(root);

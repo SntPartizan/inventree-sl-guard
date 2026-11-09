@@ -28,9 +28,9 @@ MAX_BATCH_SIZE = 500
 def require_stock_change(user):
     """InvenTree role permission + authenticated active account."""
     if not user or not user.is_authenticated or not user.is_active:
-        raise PermissionDenied(tr('An active user is required', 'Необходим активный пользователь'))
+        raise PermissionDenied(tr('error_user_inactive'))
     if not check_user_permission(user, StockLocation, 'change'):
-        raise PermissionDenied(tr('Missing standard InvenTree permission to change StockLocation', 'Нет стандартного права InvenTree изменять StockLocation'))
+        raise PermissionDenied(tr('error_stock_change_permission'))
 
 
 def require_panel_access(plugin, user):
@@ -42,13 +42,13 @@ def require_panel_access(plugin, user):
     """
     require_stock_change(user)
     if not plugin.is_authorized(user):
-        raise PermissionDenied(tr('Bulk management is available only to administrators or authorized groups', 'Панель массового управления доступна только администратору или разрешённой группе'))
+        raise PermissionDenied(tr('error_bulk_panel_permission'))
 
 
 def validate_location_access(user, location):
     """Respect location ownership restrictions in addition to stock roles."""
     if not location.check_ownership(user):
-        raise PermissionDenied(tr('Insufficient permissions for one of the selected locations', 'Недостаточно прав на одну из выбранных локаций'))
+        raise PermissionDenied(tr('error_location_ownership'))
 
 
 def location_rows(user, protected_ids, allowed):
@@ -64,7 +64,7 @@ def location_rows(user, protected_ids, allowed):
     # Permission on location ownership may involve model methods, so get objects
     # once for that check (the listing is intentionally limited to 2000).
     if len(rows) > 2000:
-        raise ValidationError(tr('Too many locations for the management panel (limit: 2000)', 'Слишком много локаций для локальной панели (лимит 2000)'))
+        raise ValidationError(tr('error_too_many_locations'))
     objects = {
         item.pk: item for item in
         StockLocation.objects.select_related('owner').filter(pk__in=[row['pk'] for row in rows])
@@ -108,9 +108,9 @@ class ConfigSerializer(serializers.Serializer):
         found_types = set(StockLocationType.objects.filter(pk__in=types).values_list('pk', flat=True))
         found_groups = set(Group.objects.filter(pk__in=groups).values_list('pk', flat=True))
         if found_types != types:
-            raise ValidationError({'protected_type_ids': tr('Unknown stock location type', 'Несуществующий тип локации')})
+            raise ValidationError({'protected_type_ids': tr('error_unknown_location_type')})
         if found_groups != groups:
-            raise ValidationError({'allowed_group_ids': tr('Unknown group', 'Несуществующая группа')})
+            raise ValidationError({'allowed_group_ids': tr('error_unknown_group')})
         attrs['protected_type_ids'] = types
         attrs['allowed_group_ids'] = groups
         return attrs
@@ -124,7 +124,7 @@ class ConfigView(APIView):
 
     def _check_admin(self, request):
         if not request.user.is_active or not request.user.is_superuser:
-            raise PermissionDenied(tr('Protection settings are available to superusers only', 'Настройки защиты доступны только суперпользователю'))
+            raise PermissionDenied(tr('error_settings_superuser_only'))
 
     def get(self, request):
         self._check_admin(request)
@@ -184,7 +184,7 @@ class BulkTypeSerializer(serializers.Serializer):
 
     def validate_location_ids(self, ids):
         if len(ids) != len(set(ids)):
-            raise ValidationError(tr('Duplicate location IDs', 'Повторяющиеся ID локаций'))
+            raise ValidationError(tr('error_duplicate_location_ids'))
         return ids
 
 
@@ -192,7 +192,7 @@ def bulk_update_type(plugin, user, location_ids, type_id, dry_run):
     """Atomic all-or-nothing type assignment; only one normal type per SL."""
     with transaction.atomic():
         if not StockLocationType.objects.filter(pk=type_id).exists():
-            raise ValidationError({'location_type_id': tr('The specified type does not exist', 'Указанный тип не существует')})
+            raise ValidationError({'location_type_id': tr('error_type_does_not_exist')})
 
         # Row locks protect against races between preview and commit, but final
         # permission checks are always repeated on actual submission.
@@ -201,7 +201,7 @@ def bulk_update_type(plugin, user, location_ids, type_id, dry_run):
             .filter(pk__in=location_ids).order_by('pk')
         )
         if len(locations) != len(location_ids):
-            raise ValidationError({'location_ids': tr('One or more locations were not found', 'Одна или несколько локаций не найдены')})
+            raise ValidationError({'location_ids': tr('error_locations_not_found')})
 
         authorized = plugin.is_authorized(user)
         protected_ids = plugin.protected_types()
@@ -220,8 +220,7 @@ def bulk_update_type(plugin, user, location_ids, type_id, dry_run):
                 protected_ids,
             ) and not authorized:
                 raise PermissionDenied(
-                    tr('Changing an existing protected type requires special permission: ',
-                       'Смена типа уже защищённой локации требует специального права: ')
+                    tr('error_protected_type_special_permission')
                     + f'#{location.pk} — {location.name}'
                 )
             changed.append(location)
@@ -283,7 +282,7 @@ class ChangeSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         if 'parent_id' not in attrs and 'location_type_id' not in attrs:
-            raise ValidationError(tr('Provide parent_id and/or location_type_id', 'Укажите parent_id и/или location_type_id'))
+            raise ValidationError(tr('error_missing_change_fields'))
         return attrs
 
 
@@ -297,14 +296,14 @@ class ChangeView(APIView):
     def post(self, request):
         require_stock_change(request.user)
         if not self.plugin.is_authorized(request.user):
-            raise PermissionDenied(tr('Missing special permission to move protected locations', 'Нет специального права перемещения защищённых локаций'))
+            raise PermissionDenied(tr('error_protected_move_permission'))
 
         serializer = ChangeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         values = serializer.validated_data
         location = StockLocation.objects.select_for_update().filter(pk=values['location_id']).first()
         if location is None:
-            raise ValidationError({'location_id': tr('Location not found', 'Локация не найдена')})
+            raise ValidationError({'location_id': tr('error_location_not_found')})
         validate_location_access(request.user, location)
 
         old_parent_id = location.parent_id
@@ -314,14 +313,14 @@ class ChangeView(APIView):
             if new_parent_id is not None:
                 parent = StockLocation.objects.filter(pk=new_parent_id).first()
                 if parent is None:
-                    raise ValidationError({'parent_id': tr('Parent location not found', 'Родительская локация не найдена')})
+                    raise ValidationError({'parent_id': tr('error_parent_not_found')})
                 if new_parent_id == location.pk or location.get_descendants().filter(pk=new_parent_id).exists():
-                    raise ValidationError({'parent_id': tr('Cannot move a location into itself or its descendant', 'Нельзя перемещать в саму себя или потомка')})
+                    raise ValidationError({'parent_id': tr('error_move_into_descendant')})
             location.parent_id = new_parent_id
         if 'location_type_id' in values:
             new_type_id = values['location_type_id']
             if new_type_id is not None and not StockLocationType.objects.filter(pk=new_type_id).exists():
-                raise ValidationError({'location_type_id': tr('Type not found', 'Тип не найден')})
+                raise ValidationError({'location_type_id': tr('error_location_type_not_found')})
             location.location_type_id = new_type_id
 
         if (old_parent_id, old_type_id) == (location.parent_id, location.location_type_id):

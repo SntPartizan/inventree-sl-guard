@@ -2,7 +2,11 @@
 
 **Community-developed InvenTree plugin — v0.3.1 beta, verified on InvenTree 1.6.1.**
 
-InvenTree treats racks, shelves and boxes as stock locations. This plugin lets an administrator mark selected **stock location types** as protected, so ordinary staff cannot accidentally relocate a rack or shelf — including indirectly by moving a containing location.
+**A warehouse is a physical system, not an arbitrary tree of editable database records.** Rooms, aisles, racks and fixed shelves occupy real places. When their digital hierarchy changes without a matching change on the warehouse floor, the location map stops reflecting reality.
+
+**SL Guard gives InvenTree's stock-location hierarchy a protected structural backbone.** Administrators designate types that represent fixed infrastructure. Unauthorized users cannot relocate those locations, change an existing protected type, or indirectly move protected descendants by moving an ancestor. Authorized staff can deliberately revise the layout, while everyday stock movements remain governed by normal InvenTree permissions.
+
+**Keep the digital warehouse true to the physical one. Let inventory move — not the infrastructure around it.**
 
 [![Support on Ko-fi](https://img.shields.io/badge/Support%20on-Ko--fi-FF5E5B?logo=kofi&logoColor=white)](https://ko-fi.com/sntpartizan)
 

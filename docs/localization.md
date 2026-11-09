@@ -1,14 +1,38 @@
 # Localization / Локализация
 
-The embedded admin page follows InvenTree's `context.locale` from the `UserInterfaceMixin` React route.
-The plugin ships with a small self-contained English / Russian string catalog; it does **not** modify InvenTree's global Lingui catalogs or require extra frontend dependencies.
+The plugin uses **one shared localization catalog**: `sl_guard/locales/en.json` and
+`sl_guard/locales/ru.json`. All strings have stable semantic keys such as
+`protected_types`, `search_locations`, and `error_protected_relocation`.
+Do not use Russian or English sentence text as a translation key.
 
-- `en`, `en-US`, and every locale other than `ru*`: English.
-- `ru`, `ru-RU`, `ru_RU`: Russian.
-- The names, full paths, and type names supplied by the InvenTree API remain unchanged, regardless of UI language.
-- Django-side validation and API errors follow Django's active locale (normally set by request language middleware), which could differ from the SPA setting.
-- The plugin name and static settings metadata are currently English only.
+- `sl_guard/i18n.py` reads those JSON files as packaged resources for Django-side
+  validation errors and plugin metadata.
+- `sl_guard/static/sl_guard_i18n.js` is **generated** from those same JSON
+  files for the panel and dashboard. Never edit that JS file by hand.
+- Both UI components use `tr('translation_key', {parameters})`.
+- Python uses `tr('translation_key', parameter=value)`.
+- `en`, `en-US`, and all locales other than `ru*`: English (fallback).
+- `ru`, `ru-RU`, and `ru_RU`: Russian.
+- The React panel reads `context.locale` from InvenTree; the dashboard reads
+  the dashboard context. Django API errors follow Django's active request
+  language, which can differ from the SPA preference.
+- Location names, paths, ID values, and type names supplied by InvenTree
+  remain unchanged, regardless of UI locale.
+- The plugin name and static settings metadata are intentionally English.
 
-To add another language, update the in-file `EN` text catalog in `sl_guard_panel.js` or move to structured locale files, and extend `selectLocale` / `tr` accordingly. Do not translate user-entered location names or IDs.
+## Editing translations / Изменение переводов
 
-Панель управления выбирает русский или английский по языку интерфейса InvenTree. Данные локаций не переводятся. Ошибки сервера используют язык Django и могут отличаться от языка браузерной панели.
+1. Add or update the **same key** in both `en.json` and `ru.json`.
+2. Preserve named placeholders (e.g. `{count}`, `{type}`) in both languages.
+3. Generate browser JavaScript: `python tools/build_i18n.py`.
+4. Run `python tools/build_i18n.py --check` and the Python/JS test suites.
+5. Commit JSON changes **and** the generated JavaScript.
+
+The CI validates identical key sets, matching placeholders, the generated
+module and all translation lookups. It also checks that JSON catalogs are
+included in the wheel. Additional languages require extending the language
+selectors in the Python and JavaScript locale helpers.
+
+**Русский:** переводы панели, виджета и Python API теперь используют единые
+JSON-словари. JS-модуль генерируется автоматически. В текстах используются
+стабильные ключи, а пользовательские данные склада не переводятся.

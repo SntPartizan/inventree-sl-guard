@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "inventree-sl-guard"
+version = "0.3.0"
+description = "SL Guard: protect InvenTree stock locations by type, with controlled relocation and bulk assignment"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+keywords = ["inventree", "plugin", "stock-location", "permissions", "bulk-edit"]
+classifiers = [
+  "Framework :: Django",
+  "Programming Language :: Python :: 3",
+  "Framework :: InvenTree",
+]
+
+[project.entry-points.inventree_plugins]
+SLGuard = "sl_guard.plugin:SLGuard"
+
+[tool.setuptools.packages.find]
+include = ["sl_guard*"]
+
+[tool.setuptools.package-data]
+sl_guard = ["static/*.js"]

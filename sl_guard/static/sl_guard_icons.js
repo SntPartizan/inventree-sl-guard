@@ -14,7 +14,7 @@ export function createShieldSvg(doc, size = 24) {
     'stroke-linecap': 'round', 'stroke-linejoin': 'round',
     'aria-hidden': 'true',
   })) svg.setAttribute(name, String(value));
-  svg.classList.add('tabler-icon', 'tabler-icon-shield-lock');
+  svg.setAttribute('class', 'tabler-icon tabler-icon-shield-lock');
   svg.style.color = 'var(--mantine-primary-color-light-color)';
   svg.style.flexShrink = '0';
   for (const d of SHIELD_LOCK_PATHS) {

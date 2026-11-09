@@ -4,6 +4,10 @@
 
 InvenTree treats racks, shelves and boxes as stock locations. This plugin lets an administrator mark selected **stock location types** as protected, so ordinary staff cannot accidentally relocate a rack or shelf — including indirectly by moving a containing location.
 
+[![Support on Ko-fi](https://img.shields.io/badge/Support%20on-Ko--fi-FF5E5B?logo=kofi&logoColor=white)](https://ko-fi.com/sntpartizan)
+
+SL Guard is free and open source. If you find it useful, you can [support continued development on Ko-fi](https://ko-fi.com/sntpartizan). Donations are entirely optional.
+
 ### Features
 
 - Choose protected `StockLocationType` records by **database ID**, not by name.

@@ -1,4 +1,4 @@
-/* SL Guard 0.3.0 — native InvenTree React route.
+/* SL Guard — native InvenTree React route.
  * Uses shared window.React supplied by InvenTree (no second React instance).
  * All mutations are authorized again on the server; client flags are cosmetic.
  */
@@ -127,6 +127,11 @@ const ENDPOINT = '/plugin/sl-guard/';
 // InvenTree's shared Axios client may default to 5000ms. Keep the override
 // local to bulk-type operations; never change the global API timeout.
 export const BULK_TIMEOUT_MS = 120000;
+
+/** Display the version reported by the installed server plugin, never a JS constant. */
+export function panelVersionLabel(version) {
+  return version ? `SL GUARD / ${version}` : 'SL GUARD';
+}
 
 const STYLE = `
 .slg {--fg:var(--mantine-color-text,#263447);--muted:var(--mantine-color-dimmed,#738091);--paper:var(--mantine-color-body,#fff);--line:var(--mantine-color-default-border,#dce3e9);--soft:var(--mantine-color-default-hover,rgba(127,140,160,.075));--blue:var(--mantine-primary-color-filled,#2378bd);color:var(--fg);padding:16px 8px 40px;max-width:1250px;margin:0 auto;font:inherit}
@@ -348,7 +353,7 @@ function GuardApp({ context }) {
   return h('main', { className:'slg' },
     h('div', { className:'slg-header' },
       h('div', null,
-        h('div', { className:'slg-eyebrow' }, 'SL GUARD / 0.3.0'),
+        h('div', { className:'slg-eyebrow' }, panelVersionLabel(data?.plugin_version)),
         h('h1', null, 'SL Guard'),
         h('p', null, tr('Массовое назначение типа существующим локациям. Защита применяется автоматически по типу.'))
       ),

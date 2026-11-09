@@ -1,5 +1,8 @@
 # SL Guard — защита складских локаций InvenTree
 
+[![PyPI version](https://img.shields.io/pypi/v/inventree-sl-guard?label=PyPI%20version)](https://pypi.org/project/inventree-sl-guard/)
+[![PyPI downloads per month](https://img.shields.io/pypi/dm/inventree-sl-guard?label=downloads%2Fmonth)](https://pypistats.org/packages/inventree-sl-guard)
+
 **Версия 0.3.1 beta. Проверена на InvenTree 1.6.1. Не является официальным компонентом InvenTree.**
 
 **Склад — это физическая система, а не произвольное дерево записей в базе данных.** Помещения, ряды, стеллажи и стационарные полки занимают конкретные места в реальном пространстве. Если их цифровая иерархия начинает произвольно меняться, адресная структура перестаёт соответствовать настоящему складу.

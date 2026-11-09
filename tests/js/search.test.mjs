@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {filterLocationRows} from '../../sl_guard/static/sl_guard_panel.js';
+import {filterLocationRows, panelVersionLabel} from '../../sl_guard/static/sl_guard_panel.js';
 
 const items = [
   {id:1,name:'Склад',path:'Склад',location_type_id:1,protected:true,editable:true},
@@ -55,6 +55,12 @@ test('regex alternation works without grouping', () => {
 test('regex grouping and anchors restrict matches to whole name', () => {
   const found = filterLocationRows(items,typeNames,{search:'^(Стеллаж [12]|Коробка A)$',regex:true,fields:['name']});
   assert.deepEqual(found.rows.map(r=>r.id),[2,3,5]);
+});
+
+test('panel version comes from server data rather than a stale JS release number', () => {
+  assert.equal(panelVersionLabel('0.3.1'), 'SL GUARD / 0.3.1');
+  assert.equal(panelVersionLabel('0.4.2'), 'SL GUARD / 0.4.2');
+  assert.equal(panelVersionLabel(undefined), 'SL GUARD');
 });
 
 test('bulk request timeout is overridden without modifying global API configuration', async () => {

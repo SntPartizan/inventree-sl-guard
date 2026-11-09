@@ -30,8 +30,9 @@ def test_dashboard_has_official_hook_and_hidden_navigation_preserves_route():
     assert 'def get_ui_dashboard_items(self, request, context' in code
     assert "self.plugin_static_file('sl_guard_dashboard.js:renderDashboardItem')" in code
     assert "'icon': 'ti:shield-lock'" in code
-    assert "'title': '🛡️ SL Guard'" in code
+    assert "'title': 'SL Guard'" in code
     assert "'options': {'width': 3, 'height': 3}" in code
+    assert 'sl_guard_icons.js' in (ROOT / 'sl_guard/static/sl_guard_panel.js').read_text()
     assert 'if not self._can_use_management_ui(request):' in code
     assert "if not self.get_setting('SHOW_NAVIGATION', cache=False)" in code
     assert "if not self.get_setting('SHOW_DASHBOARD_WIDGET', cache=False)" in code

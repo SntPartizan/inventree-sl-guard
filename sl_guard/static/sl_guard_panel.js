@@ -6,6 +6,7 @@ const h = (...args) => window.React.createElement(...args);
 // English is the default; Russian is selected from InvenTree's UI locale.
 export {selectLocale, tr} from './sl_guard_i18n.js';
 import {selectLocale, tr} from './sl_guard_i18n.js';
+import {SHIELD_LOCK_PATHS, installNavbarShield} from './sl_guard_icons.js';
 
 /** Build a frontend URL using the active InvenTree UI mount path.
  * InvenTree 1.6.1 routes stock locations under stock/location/:id?/*,
@@ -33,6 +34,7 @@ export function panelVersionLabel(version) {
 const STYLE = `
 .slg {--fg:var(--mantine-color-text,#263447);--muted:var(--mantine-color-dimmed,#738091);--paper:var(--mantine-color-body,#fff);--line:var(--mantine-color-default-border,#dce3e9);--soft:var(--mantine-color-default-hover,rgba(127,140,160,.075));--blue:var(--mantine-primary-color-filled,#2378bd);color:var(--fg);padding:16px 8px 40px;max-width:1250px;margin:0 auto;font:inherit}
 .slg *{box-sizing:border-box}.slg-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin:4px 0 20px}.slg-eyebrow{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);font-weight:800}.slg h1{font-size:clamp(23px,3vw,31px);font-weight:750;line-height:1.25;margin:7px 0 8px}.slg p{margin:0;color:var(--muted);line-height:1.5}.slg .slg-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 2px 12px rgba(20,36,54,.035)}.slg .slg-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.slg .slg-grow{flex:1;min-width:190px}.slg .slg-stack{display:flex;flex-direction:column;gap:14px}.slg .slg-section{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.slg .slg-small{font-size:12px;color:var(--muted)}.slg .slg-subheading{font-weight:700;font-size:17px}.slg .slg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:17px}.slg .slg-stat{border:1px solid var(--line);border-radius:12px;padding:14px 17px;background:var(--paper)}.slg .slg-stat b{display:block;font-variant-numeric:tabular-nums;font-size:25px}.slg .slg-stat span{color:var(--muted);font-size:12px}.slg input[type='text'],.slg select{height:39px;border:1px solid var(--line);background:var(--paper);color:var(--fg);border-radius:8px;padding:0 12px;font:inherit;min-width:0}.slg input[type='text']:focus,.slg select:focus{outline:2px solid var(--blue);outline-offset:1px}.slg select{min-width:190px}.slg label{cursor:pointer}.slg .slg-check{display:flex;align-items:center;gap:8px;font-size:13px}.slg input[type='checkbox']{accent-color:var(--blue);width:16px;height:16px}.slg button{border-radius:8px;border:1px solid var(--line);padding:9px 13px;background:var(--paper);color:var(--fg);cursor:pointer;font:inherit;font-size:13px;font-weight:600;transition:transform .08s,background .12s}.slg button:hover:not(:disabled){background:var(--soft)}.slg button:active:not(:disabled){transform:scale(.99)}.slg button:disabled{opacity:.45;cursor:not-allowed}.slg button.slg-primary{border-color:var(--blue);background:var(--blue);color:#fff}.slg button.slg-primary:hover:not(:disabled){filter:brightness(1.06);background:var(--blue)}.slg .slg-tabs{display:flex;gap:5px;border-bottom:1px solid var(--line);margin-bottom:16px}.slg .slg-tab{border:0;border-bottom:2px solid transparent;border-radius:0;background:none;padding:11px 15px;margin-bottom:-1px;font-weight:650;color:var(--muted)}.slg .slg-tab.slg-active{border-color:var(--blue);color:var(--blue)}.slg .slg-pill{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--soft);border-radius:999px;padding:3px 8px;font-size:11px;font-weight:650;white-space:nowrap}.slg .slg-pill.slg-protected{background:rgba(208,126,18,.1);border-color:rgba(208,126,18,.24);color:var(--fg)}.slg .slg-tablewrap{max-height:570px;overflow:auto;border:1px solid var(--line);border-radius:10px;margin-top:12px}.slg table{border-collapse:collapse;width:100%;min-width:950px;font-size:13px}.slg th{position:sticky;top:0;background:var(--paper);z-index:2;text-align:left;color:var(--muted);font-size:12px;font-weight:650;border-bottom:1px solid var(--line);padding:12px}.slg td{border-bottom:1px solid var(--line);padding:10px 12px;vertical-align:middle}.slg tr:last-child td{border-bottom:0}.slg tr:hover td{background:var(--soft)}.slg .slg-path{font-size:13px;font-weight:550;color:var(--fg);line-height:1.5;overflow-wrap:anywhere;white-space:normal;max-width:550px}.slg .slg-name{font-weight:700;white-space:nowrap}.slg .slg-preview-locations{max-height:200px;overflow:auto;margin:12px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--soft)}.slg .slg-preview-item{font-size:12px;line-height:1.45;overflow-wrap:anywhere;padding:4px 0}.slg .slg-preview-item+.slg .slg-preview-item{border-top:1px solid var(--line)}.slg .slg-foot{display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:16px}.slg .slg-callout{padding:13px 15px;border-radius:10px;border:1px solid var(--line);font-size:13px;line-height:1.6}.slg .slg-callout.slg-success{border-color:#2d9a6455;background:#2d9a6414}.slg .slg-callout.slg-error{border-color:#c3424255;background:#c3424214}.slg .slg-callout.slg-note{background:var(--soft)}.slg .slg-check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;padding:12px 0}.slg .slg-check-item{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;cursor:pointer}.slg .slg-check-item:hover{background:var(--soft)}.slg .slg-subcard{padding-top:16px;border-top:1px solid var(--line)}.slg .slg-backdrop{position:fixed;inset:0;z-index:1000;background:rgba(9,25,40,.55);display:flex;align-items:center;justify-content:center;padding:18px}.slg .slg-dialog{width:min(520px,100%);background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:0 25px 70px #0003}.slg .slg-dialog h2{margin:0 0 10px;font-size:21px}.slg .slg-dialog .slg-row{margin-top:23px;justify-content:flex-end}.slg .slg-toolbar{margin-top:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.slg .slg-right{margin-left:auto}.slg .slg-counter{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.slg .slg-link{color:var(--blue);text-decoration:none;font-size:13px}.slg .slg-link:hover{text-decoration:underline}.slg .slg-search-fields{display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:10px 13px;border:1px solid var(--line);background:var(--soft);border-radius:9px}.slg .slg-search-fields .slg-check{padding:4px 8px;border-radius:6px;background:var(--paper);border:1px solid var(--line)}.slg .slg-search-fields .slg-search-title{font-size:12px;font-weight:700;color:var(--muted);margin-right:4px}.slg .slg-regex-help{border:1px solid var(--line);border-radius:9px;padding:12px 14px;background:var(--soft);font-size:13px}.slg .slg-regex-help summary{font-weight:650;cursor:pointer;color:var(--fg)}.slg .slg-regex-help p{margin:10px 0}.slg .slg-regex-help code{font-family:ui-monospace,monospace;padding:2px 5px;border-radius:4px;background:var(--paper);overflow-wrap:anywhere}.slg .slg-regex-examples{display:grid;grid-template-columns:minmax(180px,250px) 1fr;gap:8px 16px;margin-top:10px;align-items:center}.slg .slg-regex-examples span{color:var(--muted)}@media(max-width:600px){.slg .slg-regex-examples{grid-template-columns:1fr;gap:4px}.slg .slg-regex-examples span{margin-bottom:7px}}.slg .slg-warning{color:var(--fg);border:1px solid rgba(208,126,18,.36);background:rgba(208,126,18,.09);padding:10px 13px;border-radius:9px;font-size:12px;line-height:1.5}@media(max-width:750px){.slg .slg-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.slg .slg-card{padding:14px}.slg .slg-right{margin-left:0}.slg .slg-stat b{font-size:21px}}
+.slg .slg-headline{display:flex;align-items:center;gap:10px}.slg .slg-headline h1{margin:7px 0 8px}.slg .slg-stat b.slg-stat-value{display:flex;align-items:center;gap:9px}
 `;
 
 function useStyles() {
@@ -44,6 +46,7 @@ function useStyles() {
       style.textContent = STYLE;
       document.head.appendChild(style);
     }
+    installNavbarShield();
   }, []);
 }
 
@@ -241,7 +244,16 @@ function GuardApp({ context }) {
   }
 
   const button = (label, handler, more = {}) => h('button', { type:'button', onClick:handler, ...more }, label);
-  const stat = (value, label) => h('div', { className:'slg-stat' }, h('b', null, value), h('span', null, label));
+  const shield = (size=24) => h('svg', {
+    width:size, height:size, viewBox:'0 0 24 24', fill:'none', stroke:'currentColor',
+    strokeWidth:2, strokeLinecap:'round', strokeLinejoin:'round', 'aria-hidden':true,
+    className:'tabler-icon tabler-icon-shield-lock',
+    style:{color:'var(--mantine-primary-color-light-color)',flexShrink:0}
+  }, ...SHIELD_LOCK_PATHS.map((d,i) => h('path',{key:i,d})));
+  const stat = (value, label, protectedStat=false) => h('div', { className:'slg-stat' },
+    h('b', {className:protectedStat?'slg-stat-value':undefined},
+      ...(protectedStat?[shield(23),value]:[value])),
+    h('span', null, label));
   const pill = (text, protectedItem=false) => h('span', { className:`slg-pill ${protectedItem ? 'slg-protected':''}` }, text);
   const typeLabel = id => id == null ? tr('no_type') : typeNames[id] || tr('type_number',{id});
   const pathsById = Object.fromEntries(available.map(row => [row.id, row.path]));
@@ -251,14 +263,14 @@ function GuardApp({ context }) {
     h('div', { className:'slg-header' },
       h('div', null,
         h('div', { className:'slg-eyebrow' }, panelVersionLabel(data?.plugin_version)),
-        h('h1', null, 'SL Guard'),
+        h('div', {className:'slg-headline'}, shield(29), h('h1', null, 'SL Guard')),
         h('p', null, tr('bulk_assignment_description'))
       ),
       h('a', { className:'slg-link', href:frontendUrl('stock/location/index/') }, tr('open_location_tree'))
     ),
     h('div', { className:'slg-grid' },
       stat(available.length, tr('available_locations')),
-      stat(alreadyProtected, tr('with_protected_type')),
+      stat(alreadyProtected, tr('with_protected_type'), true),
       stat(withoutType, tr('no_type'))
     ),
     h('section', { className:'slg-card' },

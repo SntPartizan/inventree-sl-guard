@@ -1,5 +1,6 @@
 /* SL Guard dashboard card. InvenTree 1.6.1 UserInterfaceMixin dashboard contract. */
 import {selectLocale, tr} from './sl_guard_i18n.js';
+import {createShieldSvg, installNavbarShield} from './sl_guard_icons.js';
 function detectLocale(data) {
   const proposed = data?.context?.locale || data?.locale ||
     (typeof document !== 'undefined' ? document.documentElement?.lang : '') || 'en';
@@ -20,18 +21,15 @@ export function renderDashboardItem(target, data) {
   if (!target || typeof document === 'undefined') return;
   const context = data?.context || {};
   selectLocale(detectLocale(data));
+  installNavbarShield();
   const protectedCount = Number(context.protected_count) || 0;
   const typeCount = Number(context.protected_type_count) || 0;
   const root = document.createElement('div');
   root.style.cssText = 'display:flex;flex-direction:column;justify-content:space-between;gap:8px;height:100%;box-sizing:border-box;padding:2px 0;color:var(--mantine-color-text,inherit)';
   const title = document.createElement('div');
   title.style.cssText = 'display:flex;align-items:center;gap:9px;font-size:17px;font-weight:700';
-  // InvenTree 1.6.1 does not render icon hints for plugin navigation tabs.
-  // Use the identical shield character in both navigation and dashboard.
-  const shield = document.createElement('span');
-  shield.textContent = '🛡️';
-  shield.setAttribute('aria-hidden', 'true');
-  shield.style.cssText = 'font-size:23px;line-height:1;flex-shrink:0';
+  // Same outline shield as the navigation and protected-location counter.
+  const shield = createShieldSvg(document, 23);
   title.append(shield, document.createTextNode('SL Guard'));
 
   const stats = document.createElement('div');

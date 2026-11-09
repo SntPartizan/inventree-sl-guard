@@ -143,9 +143,8 @@ class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, Inv
             return []
         return [{
             'key': 'slg-bulk-assign-navigation',
-            'title': '🛡️ SL Guard',
-            # InvenTree 1.6.1 ignores icons on plugin navigation tabs.
-            # Keep the icon hint, while the title uses the same shield as the widget.
+            'title': 'SL Guard',
+            # InvenTree 1.6.1 ignores this hint in nav tabs; optional frontend enhancement renders it.
             'icon': 'ti:shield-lock',
             'options': {'url': 'plugin/sl-guard/manage'},
         }]

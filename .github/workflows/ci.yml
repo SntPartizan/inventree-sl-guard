@@ -46,6 +46,7 @@ jobs:
               assert any(p.endswith('sl_guard_panel.js') for p in names)
               assert any(p.endswith('sl_guard_dashboard.js') for p in names)
               assert any(p.endswith('sl_guard_i18n.js') for p in names)
+              assert any(p.endswith('sl_guard_icons.js') for p in names)
               assert any(p.endswith('sl_guard/locales/en.json') for p in names)
               assert any(p.endswith('sl_guard/locales/ru.json') for p in names)
               ep = [p for p in names if p.endswith('entry_points.txt')]

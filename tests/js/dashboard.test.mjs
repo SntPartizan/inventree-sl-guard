@@ -22,7 +22,10 @@ test('SL Guard dashboard card links to existing route and displays protected cou
   const target=new FakeElement('target');
   renderDashboardItem(target,{context:{protected_count:74,protected_type_count:2,locale:'en'}});
   assert.match(getText(target),/SL Guard/);
-  assert.match(getText(target),/🛡️/);
+  const shield=target.children[0].children[0].children[0];
+  assert.equal(shield.tag,'svg');
+  assert.equal(shield.attrs.viewBox,'0 0 24 24');
+  assert.equal(shield.children.length,3);
   assert.match(target.children[0].style.cssText,/height:100%/);
   assert.match(getText(target),/Protected locations/);
   assert.match(getText(target),/74/);

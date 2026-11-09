@@ -417,6 +417,7 @@ function GuardApp({ context }) {
 
 /** Called by InvenTree UserInterfaceMixin's React route loader. */
 export function renderGuardPage(context) {
+  selectLocale(context?.locale || context?.context?.locale || (typeof document !== 'undefined' ? document.documentElement.lang : 'en'));
   if (!window.React) return tr('react_unavailable');
   return h(GuardApp, { context });
 }

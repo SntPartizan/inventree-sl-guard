@@ -1,6 +1,6 @@
 # Maintainer release guide
 
-SL Guard is currently at Python package version **0.3.1**. It has been tested on InvenTree 1.6.1. It is not yet published on PyPI.
+SL Guard is currently at Python package version **0.3.1**. It has been tested on InvenTree 1.6.1. Version **0.3.1** was published on PyPI through GitHub Actions Trusted Publishing on 2026-11-09.
 
 ## Before publishing
 
@@ -27,7 +27,7 @@ SL Guard is currently at Python package version **0.3.1**. It has been tested on
 
 ## Deployment
 
-After the PyPI publication succeeds, install by package name `inventree-sl-guard` in the InvenTree plugin installer without a Git URL. Verify it loads and that protected types/groups retain their settings when upgrading the same plugin.
+Install by package name `inventree-sl-guard` in the InvenTree plugin installer without a Git URL. Verify it loads and that protected types/groups retain their settings when upgrading the same plugin.
 
 The standard `ci.yml` workflow validates normal commits but **does not publish anything**. Only publication of a GitHub Release triggers the separate `publish.yml` upload workflow.
 

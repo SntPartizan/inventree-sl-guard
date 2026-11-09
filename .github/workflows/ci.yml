@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Python ${{ matrix.python-version }} / Node 22
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install build and test tools
+        run: python -m pip install --upgrade pip pytest build twine
+      - name: Python unit tests
+        run: python -m pytest -q tests
+      - name: JS tests
+        run: node --test tests/js/*.test.mjs
+      - name: Build wheel and source distribution
+        run: python -m build
+      - name: Check package metadata
+        run: python -m twine check dist/*
+      - name: Confirm plugin entrypoint and packaged JS
+        run: |
+          python - <<'PY'
+          import glob, zipfile
+          wheel = glob.glob('dist/*.whl')[0]
+          with zipfile.ZipFile(wheel) as z:
+              names = z.namelist()
+              assert any(p.endswith('sl_guard_panel.js') for p in names)
+              assert any(p.endswith('sl_guard_dashboard.js') for p in names)
+              ep = [p for p in names if p.endswith('entry_points.txt')]
+              assert len(ep) == 1
+              assert 'inventree_plugins' in z.read(ep[0]).decode()
+          print('Package contains plugin entrypoint, panel and dashboard JS')
+          PY

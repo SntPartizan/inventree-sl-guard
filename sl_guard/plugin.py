@@ -144,8 +144,6 @@ class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, Inv
         return [{
             'key': 'slg-bulk-assign-navigation',
             'title': 'SL Guard',
-            # InvenTree 1.6.1 ignores this hint in nav tabs; optional frontend enhancement renders it.
-            'icon': 'ti:shield-lock',
             'options': {'url': 'plugin/sl-guard/manage'},
         }]
 

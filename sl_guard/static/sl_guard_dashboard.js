@@ -1,6 +1,6 @@
 /* SL Guard dashboard card. InvenTree 1.6.1 UserInterfaceMixin dashboard contract. */
 import {selectLocale, tr} from './sl_guard_i18n.js';
-import {createShieldSvg, installNavbarShield} from './sl_guard_icons.js';
+import {createShieldSvg} from './sl_guard_icons.js';
 function detectLocale(data) {
   const proposed = data?.context?.locale || data?.locale ||
     (typeof document !== 'undefined' ? document.documentElement?.lang : '') || 'en';
@@ -21,7 +21,6 @@ export function renderDashboardItem(target, data) {
   if (!target || typeof document === 'undefined') return;
   const context = data?.context || {};
   selectLocale(detectLocale(data));
-  installNavbarShield();
   const protectedCount = Number(context.protected_count) || 0;
   const typeCount = Number(context.protected_type_count) || 0;
   const root = document.createElement('div');

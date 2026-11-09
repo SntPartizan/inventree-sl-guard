@@ -6,7 +6,7 @@ const h = (...args) => window.React.createElement(...args);
 // English is the default; Russian is selected from InvenTree's UI locale.
 export {selectLocale, tr} from './sl_guard_i18n.js';
 import {selectLocale, tr} from './sl_guard_i18n.js';
-import {SHIELD_LOCK_PATHS, installNavbarShield} from './sl_guard_icons.js';
+import {SHIELD_LOCK_PATHS} from './sl_guard_icons.js';
 
 /** Build a frontend URL using the active InvenTree UI mount path.
  * InvenTree 1.6.1 routes stock locations under stock/location/:id?/*,
@@ -46,7 +46,6 @@ function useStyles() {
       style.textContent = STYLE;
       document.head.appendChild(style);
     }
-    installNavbarShield();
   }, []);
 }
 

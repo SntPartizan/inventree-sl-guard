@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {createShieldSvg, ensureNavbarShield, SHIELD_LOCK_PATHS} from '../../sl_guard/static/sl_guard_icons.js';
+import {createShieldSvg, SHIELD_LOCK_PATHS} from '../../sl_guard/static/sl_guard_icons.js';
 
 class Element {
   constructor(tag) { this.tag=tag; this.style={}; this.attrs={}; this.children=[]; this.textContent=''; this.classNames=new Set(); this.classList={add:(...names)=>names.forEach(name=>this.classNames.add(name))}; }
@@ -21,14 +21,3 @@ test('outline shield has the exact Tabler SVG paths and dynamic Mantine theme co
   assert.deepEqual(svg.children.map(el=>el.attrs.d),[...SHIELD_LOCK_PATHS]);
 });
 
-test('navigation shield is inserted only once and only for SL Guard',()=>{
-  const tab=new Element('button'); tab.textContent='SL Guard';
-  const doc={querySelectorAll:()=>[tab],createElementNS:(_,tag)=>new Element(tag)};
-  assert.equal(ensureNavbarShield(doc),true);
-  assert.equal(ensureNavbarShield(doc),true);
-  assert.equal(tab.children.length,1);
-  assert.equal(tab.children[0].tag,'svg');
-  assert.equal(tab.style.alignItems,'center');
-  tab.textContent='Other';
-  assert.equal(ensureNavbarShield(doc),false);
-});

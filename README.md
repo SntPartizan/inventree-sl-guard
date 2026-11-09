@@ -1,6 +1,6 @@
 # InvenTree SL Guard
 
-**Community-developed InvenTree plugin — v0.3.0 beta, verified on InvenTree 1.6.1.**
+**Community-developed InvenTree plugin — v0.3.1 beta, verified on InvenTree 1.6.1.**
 
 InvenTree treats racks, shelves and boxes as stock locations. This plugin lets an administrator mark selected **stock location types** as protected, so ordinary staff cannot accidentally relocate a rack or shelf — including indirectly by moving a containing location.
 
@@ -12,7 +12,7 @@ InvenTree treats racks, shelves and boxes as stock locations. This plugin lets a
 - Prevent indirect relocation of protected descendants when moving an unprotected ancestor.
 - Bulk-assign types from an embedded panel: full hierarchical paths, selectable search fields (name, path, current type, ID), optional JavaScript regex, checkboxes, preview/dry-run, transactional server-side commit.
 - Retain ordinary editing of names/descriptions, normal stock-item moves, and moves of locations without protected descendants.
-- Optional **SL Guard** navigation shortcut and **SL Guard** dashboard widget (shield icon). Both are independently configurable by the superuser; hiding either does not disable protection or remove the management route.
+- Optional **SL Guard** navigation shortcut and **SL Guard** dashboard widget (matching shield symbol). Both are independently configurable by the superuser; hiding either does not disable protection or remove the management route.
 
 > **Compatibility caution:** This beta is tested on **InvenTree 1.6.1**, not on every InvenTree release. It wraps an internal `LocationSerializer.validate` method at runtime to pass the authenticated request user to the model validation hook. This is a monkey patch, not a stable public plugin API. Review and test before upgrading InvenTree.
 
@@ -32,7 +32,7 @@ This package is **not yet published on PyPI**. Install it directly from the publ
    | Confirm plugin installation | Enabled |
 
 4. Click **Install**. InvenTree runs pip in its own Python environment, discovers the plugin and collects its static files.
-5. In the plugin list, **activate SL Guard** (currently listed as `SLGuard`). Restart the InvenTree web process and background workers if needed so all processes load the new code. If the UI still shows old JavaScript, hard-refresh the browser; run `manage.py collectplugins` with the correct InvenTree configuration only if static-file collection needs troubleshooting.
+5. In the plugin list, **activate SL Guard** (listed as `SL Guard`). Restart the InvenTree web process and background workers if needed so all processes load the new code. If the UI still shows old JavaScript, hard-refresh the browser; run `manage.py collectplugins` with the correct InvenTree configuration only if static-file collection needs troubleshooting.
 6. Configure **Protected StockLocationType IDs** and, optionally, **Authorized group IDs** in SL Guard settings. The management page is at `/web/plugin/sl-guard/manage` (relative to your InvenTree server).
 7. Test that an ordinary user cannot relocate a protected stock location and that an authorized administrator can.
 
@@ -49,12 +49,12 @@ For reproducible deployments, pin a tested Git tag in the URL (for example `git+
 For offline development or deployments where the GUI installer is unavailable, install a downloaded release wheel in the **same Python environment** as InvenTree:
 
 ```bash
-python -m pip install --no-deps --upgrade ./inventree_sl_guard-0.3.0-py3-none-any.whl
+python -m pip install --no-deps --upgrade ./inventree_sl_guard-0.3.1-py3-none-any.whl
 ```
 
 Restart web and worker processes, activate the plugin and collect static files if needed. Do not run the command against an unrelated system Python environment.
 
-The UI brand is **SL Guard** in every language. English and Russian panel translations are provided. The distribution is `inventree-sl-guard`, the plugin's internal `NAME` is currently `SLGuard`, and its slug is `sl-guard`. 
+The UI brand is **SL Guard** in every language. English and Russian panel translations are provided. The distribution is `inventree-sl-guard`, the plugin's display name is `SL Guard`, and its slug is `sl-guard`. 
 
 See [Russian instructions](README_RU.md), [localization notes](docs/localization.md), and [deployment notes](docs/deployment.md).
 

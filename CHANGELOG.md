@@ -1,12 +1,19 @@
 # Changelog
 
+## 0.3.1 — beta (UI polish)
+
+- Display the plugin as **SL Guard** in the InvenTree plugin list (unchanged slug `sl-guard`).
+- Set author to **SntPartizan** in plugin metadata and package metadata.
+- Show the same shield character in the plugin navigation tab and dashboard card without patching InvenTree core.
+- Increase the dashboard widget's minimum height from 2 to 3 grid rows and reduce card spacing so the management link is visible.
+- Update English/Russian documentation and regression tests. Protection rules remain unchanged.
+
 ## 0.3.0 — beta (breaking identity change)
 
 - Renamed **all plugin identifiers** to SL Guard: Python distribution `inventree-sl-guard`, module `sl_guard`, entrypoint/class `SLGuard`, InvenTree slug `sl-guard`, static assets, API paths and dashboard routes.
 - Rebranded navigation item, panel and dashboard item to **SL Guard** in every locale.
 - Added independent `SHOW_NAVIGATION` and `SHOW_DASHBOARD_WIDGET` settings, editable through the embedded **Protection settings → Quick access** form.
 - Added an optional InvenTree 1.6.1 dashboard card showing counts of protected locations/types and linking to the management panel.
-- The new plugin requires fresh protected-type / authorized-group configuration after migration; existing StockLocation type values are unaffected. See migration guide.
 - Added dashboard and compatibility tests. Stock protection and bulk-update logic remain unchanged.
 
 ## 0.2.6 — beta

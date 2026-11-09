@@ -15,10 +15,11 @@ def test_sl_guard_internal_identity_and_public_title():
                 attrs[stmt.targets[0].id] = ast.literal_eval(stmt.value)
             except (ValueError, TypeError):
                 pass
-    assert attrs['NAME'] == 'SLGuard'  # new plugin identity; old configuration is not reused
+    assert attrs['NAME'] == 'SL Guard'  # display name; the slug stays stable
     assert attrs['SLUG'] == 'sl-guard'
     assert attrs['TITLE'] == 'SL Guard'
-    assert attrs['VERSION'] == '0.3.0'
+    assert attrs['VERSION'] == '0.3.1'
+    assert attrs['AUTHOR'] == 'SntPartizan'
     source = (ROOT / 'sl_guard/plugin.py').read_text()
     assert '"SHOW_NAVIGATION"' in source and '"SHOW_DASHBOARD_WIDGET"' in source
     assert source.count('"default": True') >= 2
@@ -29,7 +30,8 @@ def test_dashboard_has_official_hook_and_hidden_navigation_preserves_route():
     assert 'def get_ui_dashboard_items(self, request, context' in code
     assert "self.plugin_static_file('sl_guard_dashboard.js:renderDashboardItem')" in code
     assert "'icon': 'ti:shield-lock'" in code
-    assert "'title': 'SL Guard'" in code
+    assert "'title': '🛡️ SL Guard'" in code
+    assert "'options': {'width': 3, 'height': 3}" in code
     assert 'if not self._can_use_management_ui(request):' in code
     assert "if not self.get_setting('SHOW_NAVIGATION', cache=False)" in code
     assert "if not self.get_setting('SHOW_DASHBOARD_WIDGET', cache=False)" in code

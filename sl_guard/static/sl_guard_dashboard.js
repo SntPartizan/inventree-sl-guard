@@ -15,8 +15,6 @@ export function frontendUrl(route, pathname = (typeof window !== 'undefined' ? w
   return `${root.replace(/\/+$/, '')}/${String(route).replace(/^\/+/, '')}`;
 }
 
-const SHIELD_PATH = 'M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z';
-
 export function renderDashboardItem(target, data) {
   if (!target || typeof document === 'undefined') return;
   const context = data?.context || {};
@@ -24,34 +22,19 @@ export function renderDashboardItem(target, data) {
   const protectedCount = Number(context.protected_count) || 0;
   const typeCount = Number(context.protected_type_count) || 0;
   const root = document.createElement('div');
-  root.style.cssText = 'display:flex;flex-direction:column;gap:12px;min-height:115px;padding:3px 0;color:var(--mantine-color-text,inherit)';
+  root.style.cssText = 'display:flex;flex-direction:column;justify-content:space-between;gap:8px;height:100%;box-sizing:border-box;padding:2px 0;color:var(--mantine-color-text,inherit)';
   const title = document.createElement('div');
   title.style.cssText = 'display:flex;align-items:center;gap:9px;font-size:17px;font-weight:700';
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('width', '25');
-  svg.setAttribute('height', '25');
-  svg.setAttribute('fill', 'none');
-  svg.setAttribute('stroke', 'currentColor');
-  svg.setAttribute('stroke-width', '1.8');
-  svg.setAttribute('stroke-linecap', 'round');
-  svg.setAttribute('stroke-linejoin', 'round');
-  svg.setAttribute('aria-hidden', 'true');
-  const outline = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  outline.setAttribute('d', SHIELD_PATH);
-  svg.appendChild(outline);
-  const lock = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-  lock.setAttribute('x', '9'); lock.setAttribute('y', '11');
-  lock.setAttribute('width', '6'); lock.setAttribute('height', '5');
-  lock.setAttribute('rx', '1');
-  svg.appendChild(lock);
-  const shackle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  shackle.setAttribute('d', 'M10 11V9a2 2 0 0 1 4 0v2');
-  svg.appendChild(shackle);
-  title.append(svg, document.createTextNode('SL Guard'));
+  // InvenTree 1.6.1 does not render icon hints for plugin navigation tabs.
+  // Use the identical shield character in both navigation and dashboard.
+  const shield = document.createElement('span');
+  shield.textContent = '🛡️';
+  shield.setAttribute('aria-hidden', 'true');
+  shield.style.cssText = 'font-size:23px;line-height:1;flex-shrink:0';
+  title.append(shield, document.createTextNode('SL Guard'));
 
   const stats = document.createElement('div');
-  stats.style.cssText = 'display:flex;gap:18px;flex-wrap:wrap';
+  stats.style.cssText = 'display:flex;gap:18px;row-gap:6px;flex-wrap:wrap';
   for (const [value, label] of [
     [protectedCount, ru ? 'Защищённых локаций' : 'Protected locations'],
     [typeCount, ru ? 'Защищённых типов' : 'Protected types'],
@@ -69,7 +52,7 @@ export function renderDashboardItem(target, data) {
   const link = document.createElement('a');
   link.href = frontendUrl('plugin/sl-guard/manage');
   link.textContent = ru ? 'Управление локациями →' : 'Manage stock locations →';
-  link.style.cssText = 'font-size:13px;font-weight:600;color:var(--mantine-primary-color-filled,#2378bd);align-self:flex-start';
+  link.style.cssText = 'font-size:13px;font-weight:600;line-height:1.3;color:var(--mantine-primary-color-filled,#2378bd);align-self:flex-start;white-space:normal';
   root.append(title, stats, link);
   target.replaceChildren(root);
 }

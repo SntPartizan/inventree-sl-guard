@@ -18,12 +18,12 @@ from .policy import (
 class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, InvenTreePlugin):
     """Block relocation and removal/replacement of protected StockLocation types."""
 
-    NAME = "SLGuard"
+    NAME = "SL Guard"
     SLUG = "sl-guard"
     TITLE = "SL Guard"
     DESCRIPTION = "Protect stock locations from unauthorized relocation and type changes"
-    AUTHOR = "SL Guard contributors"
-    VERSION = "0.3.0"
+    AUTHOR = "SntPartizan"
+    VERSION = "0.3.1"
     LICENSE = "MIT"
 
     # IDs, not names. The admin can also configure these through config API.
@@ -154,7 +154,9 @@ class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, Inv
             return []
         return [{
             'key': 'slg-bulk-assign-navigation',
-            'title': 'SL Guard',
+            'title': '🛡️ SL Guard',
+            # InvenTree 1.6.1 ignores icons on plugin navigation tabs.
+            # Keep the icon hint, while the title uses the same shield as the widget.
             'icon': 'ti:shield-lock',
             'options': {'url': 'plugin/sl-guard/manage'},
         }]
@@ -179,7 +181,7 @@ class SLGuard(SettingsMixin, ValidationMixin, UrlsMixin, UserInterfaceMixin, Inv
             'description': tr('Protected stock locations', 'Защищённые места хранения'),
             'icon': 'ti:shield-lock',
             'source': self.plugin_static_file('sl_guard_dashboard.js:renderDashboardItem'),
-            'options': {'width': 3, 'height': 2},
+            'options': {'width': 3, 'height': 3},
             'context': {
                 'protected_count': protected_count,
                 'protected_type_count': len(protected_types),

@@ -38,6 +38,14 @@ def test_dashboard_has_official_hook_and_hidden_navigation_preserves_route():
     assert "'options': {'path': 'manage'}" in code
 
 
+def test_panel_version_is_provided_by_installed_plugin():
+    backend = (ROOT / 'sl_guard/views.py').read_text()
+    frontend = (ROOT / 'sl_guard/static/sl_guard_panel.js').read_text()
+    assert "'plugin_version': self.plugin.VERSION" in backend
+    assert 'panelVersionLabel(data?.plugin_version)' in frontend
+    assert 'SL GUARD / 0.3.0' not in frontend
+
+
 def test_optional_config_flags_and_backward_compatibility():
     code = (ROOT / 'sl_guard/views.py').read_text()
     assert 'show_navigation = serializers.BooleanField(required=False)' in code

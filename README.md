@@ -16,25 +16,47 @@ InvenTree treats racks, shelves and boxes as stock locations. This plugin lets a
 
 > **Compatibility caution:** This beta is tested on **InvenTree 1.6.1**, not on every InvenTree release. It wraps an internal `LocationSerializer.validate` method at runtime to pass the authenticated request user to the model validation hook. This is a monkey patch, not a stable public plugin API. Review and test before upgrading InvenTree.
 
-## Quick start
+## Installation from InvenTree (recommended)
 
-If you have an earlier Fixed Location Guard build installed, follow the [migration guide](docs/migrate-from-old-plugin.md) instead of installing a second plugin next to it.
+This package is **not yet published on PyPI**. Install it directly from the public GitHub repository using InvenTree's built-in plugin installer (verified on InvenTree 1.6.1).
 
-1. Back up your InvenTree database and test in a non-production instance.
-2. Install the package into the **same Python environment** as the running InvenTree service:
+If you use the earlier **Fixed Location Guard**, follow the [migration guide](docs/migrate-from-old-plugin.md) first: it is a different plugin and must not remain active alongside SL Guard.
 
-   ```bash
-   python -m pip install --no-deps ./inventree_sl_guard-0.3.0-py3-none-any.whl
-   ```
+1. Back up your database and configuration; test on a non-production instance first. Ensure external plugins are enabled (`plugins_enabled: true`).
+2. Sign in as an **InvenTree superuser**, then open **Settings → Admin → Plugins → Install Plugin**.
+3. Fill out the installer form:
 
-3. Enable external plugins (`plugins_enabled: true`) and restart the web process **and worker** (if applicable).
-4. Activate **SL Guard** (internal plugin name: `SLGuard`) in the InvenTree admin plugin page. Enable plugin UI/URLs if your deployment requires them.
-5. After installation or an update, run `python manage.py collectplugins` in the configured InvenTree environment. Refresh the browser.
-6. Open the **SL Guard** navigation item (`/web/plugin/sl-guard/manage`), assign the desired type to existing locations, then select which types are protected and which groups are allowed.
+   | Field | Value |
+   | --- | --- |
+   | Package Name | `inventree-sl-guard` |
+   | Source URL | `git+https://github.com/SntPartizan/inventree-sl-guard.git` |
+   | Version | Leave blank |
+   | Confirm plugin installation | Enabled |
 
-The UI displays **SL Guard** in every language. Panel text supports English/Russian localization. **This is a new plugin identity**, not an in-place upgrade from Fixed Location Guard. The distribution name is `inventree-sl-guard`, the plugin name is `SLGuard` and its slug is `sl-guard`. Existing StockLocation type assignments stay in the database, but old plugin settings are not automatically transferred. Follow the [migration guide](docs/migrate-from-old-plugin.md) before installing it alongside an older build. The recommended GitHub repository is **`inventree-sl-guard`**.
+4. Click **Install**. InvenTree runs pip in its own Python environment, discovers the plugin and collects its static files.
+5. In the plugin list, **activate SL Guard** (currently listed as `SLGuard`). Restart the InvenTree web process and background workers if needed so all processes load the new code. If the UI still shows old JavaScript, hard-refresh the browser; run `manage.py collectplugins` with the correct InvenTree configuration only if static-file collection needs troubleshooting.
+6. Configure **Protected StockLocationType IDs** and, optionally, **Authorized group IDs** in SL Guard settings. The management page is at `/web/plugin/sl-guard/manage` (relative to your InvenTree server).
+7. Test that an ordinary user cannot relocate a protected stock location and that an authorized administrator can.
 
-To configure shortcuts, open **SL Guard → Protection settings → Quick access**, then toggle **Show SL Guard in navigation** and **Show SL Guard dashboard widget**. The dashboard widget must be added to the user's dashboard through the normal InvenTree dashboard customization controls.
+**Dashboard widget:** SL Guard makes the widget *available*, but does not add it automatically. Add it through the normal **Dashboard → Add Widgets** interface. The navigation item and dashboard widget can be enabled or disabled independently in SL Guard settings; disabling these shortcuts does not disable protection.
+
+### Updating from GitHub
+
+From **Settings → Admin → Plugins**, use the installed package's **Update** action. Supply the same **Source URL** (`git+https://github.com/SntPartizan/inventree-sl-guard.git`) again; InvenTree 1.6.1 pre-fills the package name but may not pre-fill the Git URL. Leave **Version** blank for the current repository branch. After upgrading, check the displayed version and verify the protection rules. Settings persist for upgrades of the same `sl-guard` plugin, but should still be verified.
+
+For reproducible deployments, pin a tested Git tag in the URL (for example `git+https://github.com/SntPartizan/inventree-sl-guard.git@v0.3.0-beta` **once that tag exists**). No PyPI-based install or update is available until this package is actually published there.
+
+### Alternative: manual wheel installation
+
+For offline development or deployments where the GUI installer is unavailable, install a downloaded release wheel in the **same Python environment** as InvenTree:
+
+```bash
+python -m pip install --no-deps --upgrade ./inventree_sl_guard-0.3.0-py3-none-any.whl
+```
+
+Restart web and worker processes, activate the plugin and collect static files if needed. Do not run the command against an unrelated system Python environment.
+
+The UI brand is **SL Guard** in every language. English and Russian panel translations are provided. The distribution is `inventree-sl-guard`, the plugin's internal `NAME` is currently `SLGuard`, and its slug is `sl-guard`. Existing stock-location type assignments survive a migration from the old plugin, but protection settings do **not** transfer automatically.
 
 See [Russian instructions](README_RU.md), [localization notes](docs/localization.md), and [deployment notes](docs/deployment.md).
 
